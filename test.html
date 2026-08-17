@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Bite API Test</title>
+</head>
+<body>
+
+<h2>Quick Bite - Add Food</h2>
+
+<input id="name" placeholder="Food name">
+<input id="price" type="number" placeholder="Price">
+
+<button onclick="addFood()">Add Food</button>
+
+<p id="result"></p>
+
+<script>
+async function addFood() {
+    const name = document.getElementById("name").value;
+    const price = Number(document.getElementById("price").value);
+
+    const response = await fetch("/foods", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            price: price
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").textContent =
+        JSON.stringify(data);
+}
+
+</script>
+<hr>
+
+<h2>Delete Food</h2>
+
+<input id="deleteId" type="number" placeholder="Food ID">
+
+<button onclick="deleteFood()">Delete Food</button>
+
+<p id="deleteResult"></p>
+
+<script>
+async function deleteFood() {
+    const id = document.getElementById("deleteId").value;
+
+    const response = await fetch(`/foods/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await response.json();
+
+    document.getElementById("deleteResult").textContent =
+        JSON.stringify(data);
+}
+</script>
+<hr>
+
+<h2>Place Order</h2>
+
+<input id="customerName" placeholder="Customer name">
+<input id="foodName" placeholder="Food name">
+<input id="quantity" type="number" placeholder="Quantity">
+
+<button onclick="placeOrder()">Place Order</button>
+
+<p id="orderResult"></p>
+
+<script>
+async function placeOrder() {
+    const customerName = document.getElementById("customerName").value;
+    const foodName = document.getElementById("foodName").value;
+    const quantity = Number(document.getElementById("quantity").value);
+
+    const response = await fetch("/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            customerName: customerName,
+            foodName: foodName,
+            quantity: quantity
+        })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("orderResult").textContent =
+        JSON.stringify(data);
+}
+</script>
+<hr>
+
+<h2>Delete Order</h2>
+
+<input id="deleteOrderId" type="number" placeholder="Order ID">
+
+<button onclick="deleteOrder()">Delete Order</button>
+
+<p id="deleteOrderResult"></p>
+
+<script>
+async function deleteOrder() {
+    const id = document.getElementById("deleteOrderId").value;
+
+    const response = await fetch(`/orders/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await response.json();
+
+    document.getElementById("deleteOrderResult").textContent =
+        JSON.stringify(data);
+}
+</script>
+
+</body>
+</html>
